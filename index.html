@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007f80">
+  <title>SportConnect | Samen sporten in Tilburg</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Menubalk. De pictogrammen (data-i) worden door script.js ingevuld. -->
+  <header class="site-header"><div class="container header-inner">
+    <a class="brand" href="#/activiteiten"><span class="brand-mark"><span></span><span></span><span></span></span><span>Sport<span class="brand-accent">Connect</span></span></a>
+    <button class="icon-button menu-toggle" id="menu-toggle" aria-label="Menu openen"><svg class="icon" data-i="menu"></svg></button>
+    <nav class="main-nav" id="main-nav">
+      <a href="#/activiteiten" data-nav="activities">Activiteiten</a>
+      <a href="#/organiseren" data-nav="organize">Organiseren</a>
+      <button data-act="about">Over ons</button>
+    </nav>
+    <div class="header-actions">
+      <span class="location-label"><svg class="icon" data-i="pin"></svg> Tilburg</span>
+      <button class="button button-small" id="login-button" data-act="login">Inloggen <svg class="icon" data-i="arrow"></svg></button>
+      <details class="account-menu" id="account-menu" hidden>
+        <summary class="account-trigger"><span class="avatar" id="account-initial"></span><span id="account-name"></span><span>⌄</span></summary>
+        <div class="account-dropdown"><a href="#/mijn-activiteiten">Mijn activiteiten</a><button data-act="logout">Uitloggen</button></div>
+      </details>
+    </div>
+  </div></header>
+
+  <main>
+    <div class="container"><div class="error-box connection-error" id="connection-error" hidden></div></div>
+
+    <!-- Pagina 1: activiteiten zoeken -->
+    <section data-view="activities">
+      <div class="intro-band"><div class="container intro-layout">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="status-dot"></span> SAMEN ACTIEF IN TILBURG</p>
+          <h1>Vind jouw activiteit.<br><span>Ontmoet je buurt.</span></h1>
+          <p class="intro-text">Van een wandeling tot een potje voetbal. Ontdek wat bij je past en sluit aan, ook als je alleen komt.</p>
+          <div class="intro-points"><span><svg class="icon" data-i="check"></svg> Alle niveaus welkom</span><span><svg class="icon" data-i="check"></svg> Dicht bij huis</span></div>
+        </div>
+        <div class="intro-photo">
+          <img src="assets/wandelen.png" alt="Een groep volwassenen wandelt samen door een groen park">
+          <div class="photo-label"><span class="photo-icon"><svg class="icon" data-i="people"></svg></span><span><strong>Je kunt gewoon aansluiten</strong><small>Samen bewegen, nieuwe mensen ontmoeten</small></span></div>
+        </div>
+      </div></div>
+
+      <div class="container discover-content">
+        <section class="choice-banner">
+          <span class="choice-icon"><svg class="icon" data-i="spark"></svg></span>
+          <div><h2>Nog niet zeker wat bij je past?</h2><p>Beantwoord vier korte vragen en ontdek passende activiteiten.</p></div>
+          <button class="button" data-act="quiz">Help mij kiezen <svg class="icon" data-i="arrow"></svg></button>
+        </section>
+
+        <section class="filter-panel">
+          <div class="section-heading small-heading"><h2>Zelf filteren</h2><button class="text-button" data-act="reset">Filters wissen</button></div>
+          <form id="filter-form" class="filter-grid">
+            <label>Sport<select name="sport" id="filter-sport"><option value="">Alle sporten</option></select></label>
+            <label>Locatie<select name="district" id="filter-district"><option value="">Heel Tilburg</option></select></label>
+            <label>Niveau<select name="level" id="filter-level"><option value="">Alle niveaus</option></select></label>
+            <label>Zoeken<span class="search-field"><svg class="icon" data-i="search"></svg><input type="search" name="search" placeholder="Naam of activiteit" maxlength="100"></span></label>
+          </form>
+        </section>
+
+        <div class="recommendation-banner" id="recommendation-banner" hidden><div><strong>Gekozen voor jou</strong><p id="recommendation-summary"></p></div><button class="text-button" data-act="clear-quiz">Toon alle activiteiten</button></div>
+
+        <section class="results-section">
+          <div class="section-heading results-heading">
+            <div><p class="eyebrow">ONTDEK WAT ER TE DOEN IS</p><h2>Activiteiten in de buurt <span id="results-count" class="count-badge">0</span></h2></div>
+            <label class="sort-label">Sorteer op<select id="sort-order"><option value="date">Eerstvolgende</option><option value="spots">Meeste vrije plekken</option></select></label>
+          </div>
+          <div class="results-tools"><label class="checkbox-label"><input id="only-available" type="checkbox"> Alleen activiteiten met vrije plekken</label><span class="muted small" id="results-status">Activiteiten laden…</span></div>
+          <div class="activity-list" id="activity-list"></div>
+          <div class="empty-state" id="empty-results" hidden><span class="empty-icon"><svg class="icon" data-i="search"></svg></span><h3>Geen activiteiten gevonden</h3><p>Probeer een andere sport, wijk of niveau.</p><button class="button button-outline" data-act="reset">Alle activiteiten bekijken</button></div>
+        </section>
+
+        <section class="organize-banner"><div><p class="eyebrow">BRENG MENSEN BIJ ELKAAR</p><h2>Een idee voor jouw buurt?</h2><p>Organiseer een activiteit en nodig anderen uit om mee te doen.</p></div><a class="button button-white" href="#/organiseren">Organiseer een activiteit <svg class="icon" data-i="plus"></svg></a></section>
+      </div>
+    </section>
+
+    <!-- Pagina 2: details en aanmelden (wordt door script.js ingevuld) -->
+    <section class="container page-section" data-view="detail" hidden>
+      <a class="back-link" href="#/activiteiten"><svg class="icon" data-i="back"></svg> Terug naar activiteiten</a>
+      <div id="detail-content"></div>
+    </section>
+
+    <!-- Pagina 3: activiteit organiseren of bewerken -->
+    <section class="container page-section" data-view="organize" hidden>
+      <a class="back-link" href="#/activiteiten"><svg class="icon" data-i="back"></svg> Terug naar activiteiten</a>
+      <div class="page-heading"><p class="eyebrow">SAMEN BEGINT BIJ JOU</p><h1 id="organize-title">Organiseer een activiteit</h1><p>Groot of klein, sportief of ontspannen. Geef je buurt een reden om samen te komen.</p></div>
+      <div class="organize-layout">
+        <form id="organize-form" class="form-card">
+          <div class="form-intro"><span class="step-badge">01</span><div><h2>Vertel over je activiteit</h2><p>Velden met ‘verplicht’ hebben we nodig om je activiteit te plaatsen.</p></div></div>
+          <div class="form-grid">
+            <label>Titel <span class="required-label">verplicht</span><input name="title" placeholder="Bijvoorbeeld: Samen voetballen" required minlength="3" maxlength="90"></label>
+            <label>Sport <span class="required-label">verplicht</span><select name="sport" id="organize-sport" required><option value="">Kies een sport</option></select></label>
+            <label>Wijk <span class="required-label">verplicht</span><select name="district" id="organize-district" required><option value="">Kies een wijk</option></select></label>
+            <label>Niveau <span class="required-label">verplicht</span><select name="level" id="organize-level" required><option value="">Kies een niveau</option></select></label>
+            <label class="span-2">Verzamelpunt <span class="required-label">verplicht</span><input name="meeting_point" placeholder="Bijvoorbeeld: de hoofdingang van het sportpark" required minlength="3" maxlength="160"><span class="field-hint">Vermeld een duidelijke plek of een adres waar jullie elkaar ontmoeten.</span></label>
+            <label>Datum <span class="required-label">verplicht</span><input name="date" type="date" id="organize-date" required></label>
+            <label>Tijd <span class="required-label">verplicht</span><input name="time" type="time" required></label>
+            <label class="span-2">Maximaal aantal deelnemers <span class="required-label">verplicht</span><input name="capacity" type="number" min="2" max="200" value="10" required><span class="field-hint">Kies tussen 2 en 200 plekken. Jezelf als organisator tel je niet mee.</span></label>
+            <label class="span-2">Beschrijving <span class="required-label">verplicht</span><textarea name="description" rows="5" placeholder="Wat gaan jullie doen? Voor wie is de activiteit geschikt? Wat moeten deelnemers meenemen?" required minlength="20" maxlength="2400"></textarea></label>
+          </div>
+          <div class="info-note" id="organize-login-hint"><svg class="icon" data-i="info"></svg><p>Log in of maak een account om je activiteit te plaatsen en deelnemers te beheren.</p></div>
+          <div class="error-box" id="organize-error" hidden></div>
+          <div class="form-actions"><button class="button" id="publish-button">Activiteit publiceren <svg class="icon" data-i="arrow"></svg></button><a class="text-button" href="#/activiteiten">Annuleren</a></div>
+        </form>
+        <aside class="organize-aside">
+          <div class="preview-card"><span class="preview-caption">ZO KOMT JE ACTIVITEIT IN BEELD</span><div id="preview-art"></div>
+            <div class="preview-body"><span class="tag" id="preview-sport"></span><h3 id="preview-title"></h3><p id="preview-location"></p><p id="preview-date"></p></div></div>
+          <div class="organizer-tips"><h3>Een fijne start voor iedereen</h3>
+            <p><svg class="icon" data-i="check"></svg> Beschrijf het tempo en het niveau.</p>
+            <p><svg class="icon" data-i="check"></svg> Kies een herkenbaar verzamelpunt.</p>
+            <p><svg class="icon" data-i="check"></svg> Laat weten dat alleen komen mag.</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Pagina 4: mijn activiteiten -->
+    <section class="container page-section" data-view="account" hidden>
+      <div class="page-heading"><p class="eyebrow">JOUW SPORTCONNECT</p><h1>Mijn activiteiten</h1><p>Beheer wat je organiseert en bekijk waar je bij aansluit.</p></div>
+      <div id="account-content"></div>
+    </section>
+
+    <!-- Pagina 5: afmelden via de persoonlijke link -->
+    <section class="container page-section" data-view="cancel" hidden>
+      <div class="narrow-card"><span class="empty-icon"><svg class="icon" data-i="calendar"></svg></span><h1>Je deelname afmelden</h1><p id="cancel-description"></p><div class="error-box" id="cancel-error" hidden></div><button class="button" id="cancel-button">Ja, ik meld me af</button><a class="back-link" href="#/activiteiten">Terug naar activiteiten</a></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner"><a class="brand" href="#/activiteiten">Sport<span class="brand-accent">Connect</span></a><p>Samen bewegen. Nieuwe mensen ontmoeten.</p><div><button class="text-button" data-act="about">Over SportConnect</button><button class="text-button" data-act="privacy">Privacy</button></div></div>
+    <div class="container footer-bottom"><span>SportConnect · Tilburg</span><span>Voorbeeldactiviteiten zijn herkenbaar aan het label ‘Voorbeeld’.</span></div>
+  </footer>
+
+  <!-- Eén venster voor inloggen, keuzehulp, informatie en bevestigen -->
+  <dialog id="dlg"></dialog>
+  <div class="toast" id="toast" hidden></div>
+</body>
+</html>
